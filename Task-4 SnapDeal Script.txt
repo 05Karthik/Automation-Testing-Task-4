@@ -1,0 +1,64 @@
+Q-1.Create a selenium script for snapdeal site Login Verification.
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+public class SnapDealScript {
+
+	public static void main(String[] args) throws InterruptedException {
+		// Set the path of Webdriver
+			System.setProperty("webDriver.chrome.driver", "D://Drivers//chromedriver.exe");
+		// Create object of chrome driver
+			WebDriver driver=new ChromeDriver();
+		// To maximize the window
+			driver.manage().window().maximize();	
+		// Enter the Website Url
+			driver.navigate().to("https://WWW.snapdeal.com");
+			Thread.sleep(2000);
+		//Move the Cursor to SignIn button for Click and Hold	
+			WebElement SignIn = driver.findElement(By.xpath("//*[@class='accountInner']"));
+	       
+	        Actions action=new Actions(driver);
+	        action.moveToElement(SignIn).build().perform();
+	        
+	        Thread.sleep(3000);
+	    //Click the Login Button
+	        WebElement Login = driver.findElement(By.xpath("//*[@class='accountBtn btn rippleWhite']"));
+	        Login.click();
+	        driver.switchTo().frame("loginIframe");
+	        Thread.sleep(2000);	        
+	    //Send keys to Email field
+	        WebElement Email = driver.findElement(By.id("userName"));      
+	        Thread.sleep(1000);
+	        Email.sendKeys("karthik.kn0509@gmail.com");
+	        Thread.sleep(2000);
+	    //Click continue button	                
+	        WebElement CheckUser = driver.findElement(By.id("checkUser"));
+	        CheckUser.click();
+	        Thread.sleep(8000);
+	      
+	    //Click continue button after enter OTP Manually    
+	        WebElement Continuebutton=driver.findElement(By.id("loginUsingOtp"));
+	        Continuebutton.click();
+	        Thread.sleep(2000);
+	    //Verify the User Login Successfully    
+	        String Expectedurl = driver.getCurrentUrl();
+	        String actualurl = "https://www.snapdeal.com/?loginSuccess=success&";
+
+	           if (actualurl.contentEquals(Expectedurl)){
+	                System.out.println("User Login Successfully...");
+	            } else {
+	                System.out.println("User Login Failed...");
+	            }
+	        Thread.sleep(2000);
+	     //Close the Browser Driver
+	        driver.close();
+	           
+
+	}
+
+}
+
+Output= User Login Successfully...
